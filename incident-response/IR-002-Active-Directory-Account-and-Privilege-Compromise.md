@@ -993,13 +993,13 @@ The individual detection documents remain the authoritative source for rule-leve
 
 The following detection documents provide the technical details for the detections covered by this playbook:
 
-- `DET-007-New-User-Account-Created.md`
-- `DET-008-Password-Reset.md`
-- `DET-009-User-Account-Enabled.md`
-- `DET-010_Windows_User_Account_Deleted.md`
-- `DET-011_User_Added_to_Domain_Admins.md`
-- `DET-012_User_Added_to_Enterprise_Admins.md`
-- `DET-013_User_Added_to_Local_Administrators.md`
-- `DET-014_Administrator_Account_Enabled.md`
-- `DET-015_Privileged_Account_Logon.md`
-- `DET-016_AD_Account_Computer_Attribute_Modification.md`
+- [DET-007 — New User Account Created](../docs/detections/02-account-management/DET-007-New-User-Account-Created.md)
+- [DET-008 — Password Reset](../docs/detections/02-account-management/DET-008-Password-Reset.md)
+- [DET-009 — User Account Enabled](../docs/detections/02-account-management/DET-009-User-Account-Enabled.md)
+- [DET-010 — Windows User Account Deleted](../docs/detections/02-account-management/DET-010-Windows-User-Account-Deleted.md)
+- [DET-011 — User Added to Domain Admins](../docs/detections/03-privilege-escalation/DET-011-User-Added-to-Domain-Admins.md)
+- [DET-012 — User Added to Enterprise Admins](../docs/detections/03-privilege-escalation/DET-012-User-Added-to-Enterprise-Admins.md)
+- [DET-013 — User Added to Local Administrators](../docs/detections/03-privilege-escalation/DET-013-User-Added-to-Local-Administrators.md)
+- [DET-014 — Administrator Account Enabled](../docs/detections/03-privilege-escalation/DET-014-Administrator-Account-Enabled.md)
+- [DET-015 — Privileged Account Logon](../docs/detections/03-privilege-escalation/DET-015-Privileged-Account-Logon.md)
+- [DET-016 — AD Account/Computer Attribute Modification](../docs/detections/03-privilege-escalation/DET-016-AD-Account-Computer-Attribute-Modification.md)
