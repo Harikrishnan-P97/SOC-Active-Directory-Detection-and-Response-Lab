@@ -760,9 +760,12 @@ Expected / Authorized?
 
 ## Related Playbooks
 
-- **IR-001 — Credential Attack & Account Compromise** — Authentication failures, brute force, account lockout, and suspicious successful authentication.
-- **IR-002 — AD Account & Privilege Compromise** — Account creation, password changes, privileged group changes, and AD object modification.
-- **IR-005 — Lateral Movement & Remote Execution** — Remote execution and movement following credential compromise.
-- **IR-006 — Persistence & Defense Evasion** — Persistence and security-control tampering discovered during the investigation.
+- **[IR-001 — Credential Attack & Account Compromise](../incident-response/IR-001-Credential-Attack-and-Account-Compromise.md)** — Authentication failures, brute force, account lockout, and suspicious successful authentication.
+
+- **[IR-002 — AD Account & Privilege Compromise](../incident-response/IR-002-Active-Directory-Account-and-Privilege-Compromise.md)** — Account creation, password changes, privileged group changes, and AD object modification.
+
+- **[IR-005 — Lateral Movement & Remote Execution](../incident-response/IR-005-Lateral-Movement-and-Remote-Execution.md)** — Remote execution and movement following credential compromise.
+
+- **[IR-006 — Persistence & Defense Evasion](../incident-response/IR-006-Persistence-and-Defense-Evasion.md)** — Persistence and security-control tampering discovered during the investigation.
 
 These playbooks should be used together when the investigation demonstrates that credential theft is part of a broader attack chain.
