@@ -62,13 +62,7 @@ An analyst can use this dashboard to:
 
 ### Screenshot
 
-Dashboard screenshot: **To be added**
-
-Recommended repository location:
-
-```text
-docs/images/dashboards/soc-detection-overview.png
-```
+![SOC Detection Overview Dashboard](../screenshots/SOC-Detection-Overview.gif)
 
 ---
 
@@ -121,13 +115,7 @@ The lab's authentication monitoring includes Windows security authentication eve
 
 ### Screenshot
 
-Dashboard screenshot: **To be added**
-
-Recommended repository location:
-
-```text
-docs/images/dashboards/authentication-account-monitoring.png
-```
+![Authentication and Account Monitoring Dashboard](../screenshots/Authentication-And-Account-Monitoring.gif)
 
 ---
 
@@ -186,13 +174,7 @@ The Active Directory monitoring design includes account and group management eve
 
 ### Screenshot
 
-Dashboard screenshot: **To be added**
-
-Recommended repository location:
-
-```text
-docs/images/dashboards/active-directory-security.png
-```
+![Active Directory Security Dashboard](../screenshots/Active-Directory-Security.gif)
 
 ---
 
@@ -252,13 +234,7 @@ This dashboard can be used to:
 
 ### Screenshot
 
-Dashboard screenshot: **To be added**
-
-Recommended repository location:
-
-```text
-docs/images/dashboards/sysmon-endpoint-activity.png
-```
+![Sysmon Endpoint Activity Dashboard](../screenshots/Sysmon-Endpoint-Activity.gif)
 
 ---
 
@@ -313,13 +289,7 @@ This dashboard can be used to:
 
 ### Screenshot
 
-Dashboard screenshot: **To be added**
-
-Recommended repository location:
-
-```text
-docs/images/dashboards/threat-hunting-lateral-movement.png
-```
+![Threat Hunting and Lateral Movement Dashboard](../screenshots/Threat-Hunting-And-Lateral-Movement.gif)
 
 ---
 
@@ -359,13 +329,7 @@ This dashboard can be used to:
 
 ### Screenshot
 
-Dashboard screenshot: **To be added**
-
-Recommended repository location:
-
-```text
-docs/images/dashboards/mitre-attack-coverage-activity.png
-```
+![MITRE ATT&CK Coverage and Activity Dashboard](../screenshots/MITRE-ATT&CK-Coverage-And-Activity.gif)
 
 ---
 
@@ -408,13 +372,7 @@ This dashboard can be used to:
 
 ### Screenshot
 
-Dashboard screenshot: **To be added**
-
-Recommended repository location:
-
-```text
-docs/images/dashboards/detection-validation-engineering.png
-```
+![Detection Validation and Engineering Dashboard](../screenshots/Detection-Validation-And-Engineering.gif)
 
 ---
 
@@ -617,9 +575,7 @@ This recording corresponds to the **Detection Validation & Engineering** dashboa
 
 The repository also contains:
 
-```text
-screenshots/Endpoints.png
-```
+![Monitored Endpoints](../screenshots/Endpoints.png)
 
 This image is retained as an additional project screenshot. It is not assigned to one of the seven dashboard sections because its specific dashboard context is not established by the dashboard inventory.
 
