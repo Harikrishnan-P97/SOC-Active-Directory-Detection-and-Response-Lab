@@ -413,8 +413,8 @@ This workflow connects controlled attacker activity to observable telemetry, cus
 
 ## Related Documentation
 
-- [`attack-simulations.md`](attack-simulations.md) — Controlled attack simulations used to validate the detection set.
+- [Attack Simulation](attack-simulations.md) — Controlled attack simulations used to validate the detection set.
 - [Detection Rules Documentation](detections/) — Individual detection logic, telemetry requirements, validation evidence, investigation guidance, and response playbooks.
-- [`mitre-attack.md`](mitre-attack.md) — MITRE ATT&CK mapping and coverage.
-- [`incident-response.md`](incident-response.md) — Incident response methodology and detection-to-response workflow.
+- [MITRE ATT&CK](mitre-attack.md) — MITRE ATT&CK mapping and coverage.
+- [Incident Response](incident-response.md) — Incident response methodology and detection-to-response workflow.
 - [Incident Response Playbooks](../incident-response/) — Detailed response procedures for the seven incident scenarios.
