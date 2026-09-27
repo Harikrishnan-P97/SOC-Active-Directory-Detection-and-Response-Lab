@@ -816,9 +816,9 @@ The individual detection documents provide the authoritative rule-level MITRE ma
 
 The following detection documents provide the technical details for the detections covered by this playbook:
 
-- `DET-001-Windows-Failed-Authentication.md`
-- `DET-002-Windows-Brute-Force-Detection.md`
-- `DET-003-Windows-Successful-Interactive-Authentication.md`
-- `DET-004-Successful-Login-After-Failed-Attempts.md`
-- `DET-005-User-Account-Locked.md`
-- `DET-006-Multiple-Authentication-Failures-Same-Source.md`
+- [DET-001 — Windows Failed Authentication](01-authentication/DET-001-Windows-Failed-Authentication.md)
+- [DET-002 — Windows Brute Force Detection](01-authentication/DET-002-Windows-Brute-Force-Detection.md)
+- [DET-003 — Windows Successful Interactive Authentication](01-authentication/DET-003-Windows-Successful-Interactive-Authentication.md)
+- [DET-004 — Successful Login After Failed Attempts](01-authentication/DET-004-Successful-Login-After-Failed-Attempts.md)
+- [DET-005 — User Account Locked](01-authentication/DET-005-User-Account-Locked.md)
+- [DET-006 — Multiple Authentication Failures — Same Source](01-authentication/DET-006-Multiple-Authentication-Failures-Same-Source.md)
