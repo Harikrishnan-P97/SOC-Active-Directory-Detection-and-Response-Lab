@@ -1,0 +1,1233 @@
+<!-- ========================================================= -->
+<!-- SOC Active Directory Detection Engineering Lab            -->
+<!-- Custom Wazuh Detection Rules                              -->
+<!-- ========================================================= -->
+
+<group name="local,custom_detection_engineering,">
+
+<!-- ==================== Authentication ===================== -->
+
+<!-- ========================================================= -->
+<!-- DET-001                                                   -->
+<!-- Windows Failed Authentication                             -->
+<!-- ========================================================= -->
+
+    <rule id="100100" level="3">
+
+        <if_sid>60122</if_sid>
+
+        <description>
+            DET-001 Base - Windows Failed Authentication
+        </description>
+
+        <group>
+            custom_windows,
+            authentication,
+        </group>
+
+    </rule>
+
+<!-- ========================================================= -->
+<!-- DET-002                                                   -->
+<!-- Windows Brute Force Detection                             -->
+<!-- ========================================================= -->
+
+<rule id="100101"
+      level="10"
+      frequency="3"
+      timeframe="120">
+
+    <if_matched_sid>100100</if_matched_sid>
+
+    <same_field>win.eventdata.targetUserName</same_field>
+
+    <description>
+        DET-002 Possible Brute Force against user $(win.eventdata.targetUserName)
+    </description>
+
+    <group>
+        custom_windows,
+        authentication,
+        brute_force,
+        attack.t1110,
+    </group>
+    <mitre>
+        <id>T1110</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-003                                                   -->
+<!-- Windows Successful Interactive Authentication             -->
+<!-- ========================================================= -->
+
+<rule id="100102" level="5">
+
+    <if_sid>67022</if_sid>
+    <field name="win.eventdata.logonType">2|7|10|11</field>
+
+    <description>
+        DET-003 Successful Interactive Login by $(win.eventdata.targetUserName)
+    </description>
+
+    <group>
+        custom_windows,
+        authentication,
+        successful_login,
+        attack.t1078,
+    </group>
+
+    <mitre>
+        <id>T1078</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-004                                                   -->
+<!-- Successful Login After Failed Attempts                    -->
+<!-- ========================================================= -->
+
+<rule id="100103"
+      level="8">
+
+    <if_sid>100102</if_sid>
+
+    <if_matched_sid frequency="3" timeframe="120">100100</if_matched_sid>
+
+    <same_field>win.eventdata.targetUserName</same_field>
+
+    <description>
+        DET-004 Successful login after brute force against $(win.eventdata.targetUserName)
+    </description>
+
+    <group>
+        custom_windows,
+        authentication,
+        successful_login_after_failures,
+        attack.t1110,
+        attack.t1078,
+    </group>
+
+    <mitre>
+        <id>T1110</id>
+        <id>T1078</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-005                                                   -->
+<!-- User Account Locked                                       -->
+<!-- ========================================================= -->
+
+<rule id="100104"
+      level="5">
+
+    <if_sid>60115</if_sid>
+
+    <description>
+        DET-005 - Account Locked: $(win.eventdata.targetUserName)
+    </description>
+
+    <group>
+        custom_windows,
+        authentication,
+        account_lockout,
+    </group>
+
+</rule>
+
+
+<!-- ========================================================= -->
+<!-- DET-006                                                   -->
+<!-- Multiple Authentication Failures From Same Source         -->
+<!-- ========================================================= -->
+
+<rule id="100105"
+      level="12"
+      frequency="6"
+      timeframe="180">
+
+    <if_matched_sid>100100</if_matched_sid>
+
+    <same_field>win.eventdata.ipAddress</same_field>
+
+    <description>
+        DET-006 Multiple Authentication Failures From $(win.eventdata.ipAddress) (Password Spray Approximation)
+    </description>
+
+    <group>
+        custom_windows,
+        authentication,
+        password_spraying,
+        attack.t1110,
+    </group>
+
+    <mitre>
+        <id>T1110</id>
+    </mitre>
+
+</rule>
+
+
+<!-- =================== Account Management ================== -->
+
+<!-- ========================================================= -->
+<!-- DET-007                                                   -->
+<!-- New User Account Created                                  -->
+<!-- ========================================================= -->
+
+<rule id="100106"
+      level="8">
+
+    <if_sid>60109</if_sid>
+
+    <field name="win.system.eventID">4720</field>
+
+    <description>
+        DET-007 New User Account Created: $(win.eventdata.targetUserName)
+    </description>
+
+    <group>
+        custom_windows,
+        account_management,
+        user_creation,
+        attack.t1136,
+    </group>
+
+    <mitre>
+        <id>T1136</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-008                                                   -->
+<!-- Password Reset                                            -->
+<!-- ========================================================= -->
+
+<rule id="100107"
+      level="9">
+
+    <if_sid>60103</if_sid>
+
+    <field name="win.system.eventID">4724</field>
+
+    <description>
+        DET-008 Password Reset for $(win.eventdata.targetUserName)
+    </description>
+
+    <group>
+        custom_windows,
+        account_management,
+        password_reset,
+        attack.t1098,
+    </group>
+
+    <mitre>
+        <id>T1098</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-009                                                   -->
+<!-- User Account Enabled                                      -->
+<!-- ========================================================= -->
+
+<rule id="100108" level="7">
+
+    <if_sid>60109</if_sid>
+
+    <field name="win.system.eventID">4722</field>
+
+    <description>
+        DET-009 User Account Enabled: $(win.eventdata.targetUserName)
+    </description>
+
+    <group>
+        custom_windows,
+        account_management,
+        account_enabled,
+        attack.t1098,
+    </group>
+
+    <mitre>
+        <id>T1098</id>
+    </mitre>
+
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-010                                                         -->
+<!-- Windows User Account Deletion                                   -->
+<!-- =============================================================== -->
+
+<rule id="100109" level="10">
+    <if_sid>60111</if_sid>
+
+    <field name="win.system.eventID">^4726$</field>
+
+    <description>
+        DET-010 - Windows user account deleted: $(win.eventdata.targetUserName) by $(win.eventdata.subjectUserName)
+    </description>
+
+    <group>
+        windows,
+        impact,
+        account_management,
+        custom_detection_engineering,
+        custom_detection
+    </group>
+
+    <mitre>
+        <id>T1531</id>
+    </mitre>
+</rule>
+
+<!-- ================= Privilege Escalation ================== -->
+
+<!-- ========================================================= -->
+<!-- DET-011                                                   -->
+<!-- User Added to Domain Admins                               -->
+<!-- ========================================================= -->
+
+<rule id="100110"
+      level="12">
+
+    <if_sid>60103</if_sid>
+
+    <field name="win.system.eventID">4728</field>
+
+    <field name="win.eventdata.targetUserName">Domain Admins</field>
+
+    <description>
+        DET-011 Member Added to Domain Admins: $(win.eventdata.memberName)
+    </description>
+
+    <group>
+        custom_windows,
+        privilege_escalation,
+        domain_admins,
+        attack.t1098,
+    </group>
+
+    <mitre>
+        <id>T1098</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-012                                                   -->
+<!-- User Added to Enterprise Admins                           -->
+<!-- ========================================================= -->
+
+<rule id="100111"
+      level="13">
+
+    <if_sid>60103</if_sid>
+
+    <field name="win.system.eventID">4756</field>
+
+    <field name="win.eventdata.targetUserName">Enterprise Admins</field>
+
+    <description>
+        DET-012 Member Added to Enterprise Admins: $(win.eventdata.memberName)
+    </description>
+
+    <group>
+        custom_windows,
+        privilege_escalation,
+        enterprise_admins,
+        attack.t1098,
+    </group>
+
+    <mitre>
+        <id>T1098</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-013                                                   -->
+<!-- User Added to Local Administrators                       -->
+<!-- ========================================================= -->
+
+<rule id="100112"
+      level="11">
+
+    <if_sid>60103</if_sid>
+
+    <field name="win.system.eventID">4732</field>
+
+    <field name="win.eventdata.targetUserName">Administrators</field>
+
+    <description>
+        DET-013 SID $(win.eventdata.memberSid) added to Local Administrators
+    </description>
+
+    <group>
+        custom_windows,
+        privilege_escalation,
+        local_admins,
+        attack.t1098,
+    </group>
+
+    <mitre>
+        <id>T1098</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-014                                                   -->
+<!-- Administrator Account Enabled                            -->
+<!-- ========================================================= -->
+
+<rule id="100113"
+      level="10">
+
+    <if_sid>60109</if_sid>
+
+    <field name="win.system.eventID">4722</field>
+
+    <field name="win.eventdata.targetUserName">Administrator</field>
+
+    <description>
+        DET-014 Administrator Account Enabled
+    </description>
+
+    <group>
+        custom_windows,
+        privilege_escalation,
+        administrator_enabled,
+        attack.t1098,
+    </group>
+
+    <mitre>
+        <id>T1098</id>
+    </mitre>
+
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-015                                                         -->
+<!-- Privileged Account Logon                                        -->
+<!-- =============================================================== -->
+
+<rule id="100114" level="10">
+    <if_sid>60106</if_sid>
+
+    <field name="win.system.eventID" type="pcre2">^4624$</field>
+    <field name="win.eventdata.logonType" type="pcre2">^(2|3|10)$</field>
+    <field name="win.eventdata.targetUserName" type="pcre2">^(Administrator|labadmin|testuser)$</field>
+
+    <description>
+        DET-015 - Privileged account logon detected: $(win.eventdata.targetUserName) from $(win.eventdata.ipAddress)
+    </description>
+
+    <mitre>
+        <id>T1078</id>
+    </mitre>
+
+    <group>
+        custom_detection_engineering,
+        windows,
+        authentication,
+        privileged_access
+    </group>
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-016                                                         -->
+<!-- AD Account/Computer Attribute Modification                     -->
+<!-- =============================================================== -->
+
+<rule id="100115" level="10">
+    <if_sid>60229</if_sid>
+
+    <description>
+        DET-016 - Active Directory object attribute modified: $(win.eventdata.objectDN) - Attribute: $(win.eventdata.attributeLDAPDisplayName) - Modified by: $(win.eventdata.subjectUserName)
+    </description>
+
+    <mitre>
+        <id>T1098</id>
+    </mitre>
+
+    <group>
+        custom_detection_engineering,
+        windows,
+        account_management,
+        privilege_escalation,
+        ad_attribute_modification
+    </group>
+</rule>
+
+
+<!-- ============== Credential Access And Kerberos =========== -->
+
+<!-- ========================================================= -->
+<!-- DET-017                                                   -->
+<!-- Kerberoasting Detection                                   -->
+<!-- ========================================================= -->
+
+<rule id="100116" level="10">
+
+    <if_sid>60106</if_sid>
+
+    <field name="win.system.eventID">4769</field>
+
+    <description>
+        DET-017 Kerberos Service Ticket Request (Possible Kerberoasting)
+    </description>
+
+    <group>
+        custom_windows,
+        credential_access,
+        kerberos,
+        kerberoasting,
+        attack.t1558.003,
+    </group>
+
+    <mitre>
+        <id>T1558.003</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-018                                                   -->
+<!-- AS-REP Roasting Detection                                 -->
+<!-- ========================================================= -->
+
+<rule id="100117" level="12">
+
+    <if_sid>60103</if_sid>
+
+    <field name="win.system.eventID">4768</field>
+
+    <field name="win.eventdata.preAuthType">0</field>
+
+    <description>
+        DET-018 Possible AS-REP Roasting - Kerberos TGT Requested Without Preauthentication for $(win.eventdata.targetUserName)
+    </description>
+
+    <group>
+        custom_windows,
+        credential_access,
+        kerberos,
+        asreproasting,
+        attack.t1558.004,
+    </group>
+
+    <mitre>
+        <id>T1558.004</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-019                                                   -->
+<!-- DCSync Attack Detection                                   -->
+<!-- ========================================================= -->
+
+<rule id="100118" level="15">
+
+    <if_sid>60103</if_sid>
+
+    <field name="win.system.eventID">4662</field>
+
+    <field name="win.eventdata.accessMask">0x100</field>
+
+    <description>
+        DET-019 Directory Replication Request (Possible DCSync)
+    </description>
+
+    <group>
+        custom_windows,
+        credential_access,
+        active_directory,
+        dcsync,
+        attack.t1003.006,
+    </group>
+
+    <mitre>
+        <id>T1003.006</id>
+    </mitre>
+
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-020                                                         -->
+<!-- Golden Ticket Attack Detection                                  -->
+<!-- =============================================================== -->
+
+<rule id="100119" level="12">
+    <if_sid>60103</if_sid>
+
+    <field name="win.system.eventID">^4769$</field>
+    <field name="win.eventdata.sessionKeyEncryptionType">^0x17$</field>
+
+    <description>
+        DET-020 - Possible Golden Ticket activity: Kerberos service ticket for $(win.eventdata.targetUserName) uses RC4 session encryption from $(win.eventdata.ipAddress)
+    </description>
+
+    <mitre>
+        <id>T1558.001</id>
+    </mitre>
+
+    <group>
+        custom_detection_engineering,
+        windows,
+        kerberos,
+        credential_access,
+        golden_ticket,
+    </group>
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-021                                                         -->
+<!-- Silver Ticket Attack Detection                                  -->
+<!-- =============================================================== -->
+
+<rule id="100120" level="14">
+
+    <if_sid>92651</if_sid>
+
+    <field name="win.eventdata.authenticationPackageName" type="pcre2">^Kerberos$</field>
+
+    <field name="win.eventdata.logonProcessName" type="pcre2">^Kerberos$</field>
+
+    <field name="win.eventdata.logonType" type="pcre2">^3$</field>
+
+    <field name="win.eventdata.subjectUserSid" type="pcre2">^S-1-0-0$</field>
+
+    <field name="win.eventdata.targetUserName" type="pcre2" negate="yes">\$$</field>
+
+    <description>
+        DET-021 - Possible Silver Ticket: forged Kerberos network logon by $(win.eventdata.targetDomainName)\$(win.eventdata.targetUserName) from $(win.eventdata.ipAddress)
+    </description>
+
+    <mitre>
+        <id>T1558.002</id>
+    </mitre>
+
+    <group>
+        custom_detection_engineering,
+        windows,
+        credential_access,
+        kerberos,
+        silver_ticket,
+        authentication,
+        attack.t1558.002
+    </group>
+
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-022                                                         -->
+<!-- LSASS Credential Dumping                                        -->
+<!-- =============================================================== -->
+
+<rule id="100121" level="12">
+    <if_group>sysmon_event_10</if_group>
+
+    <field name="win.eventdata.targetImage" type="pcre2">(?i)\\lsass\.exe$</field>
+
+    <description>DET-022 - Possible LSASS credential dumping: $(win.eventdata.sourceImage) accessed $(win.eventdata.targetImage) with access $(win.eventdata.grantedAccess)</description>
+
+    <mitre>
+        <id>T1003.001</id>
+    </mitre>
+    <group>
+        custom_detection_engineering,
+        windows,
+        credential_access,
+        lsass
+    </group>
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-023                                                         -->
+<!-- NTDS.dit Credential Dumping via ntdsutil IFM                    -->
+<!-- =============================================================== -->
+
+<rule id="100122" level="15">
+    <if_sid>61603</if_sid>
+
+    <field name="win.eventdata.originalFileName" type="pcre2">(?i)^ntdsutil\.exe$</field>
+
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)\bifm\b</field>
+
+    <description>
+        DET-023 - Possible NTDS credential dumping via ntdsutil IFM: $(win.eventdata.image) executed with command $(win.eventdata.commandLine) by $(win.eventdata.user)
+    </description>
+
+    <mitre>
+        <id>T1003.003</id>
+    </mitre>
+
+    <group>
+        custom_detection_engineering,
+        windows,
+        credential_access,
+        credential_dumping,
+        ntds,
+        attack.t1003.003
+    </group>
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-024                                                         -->
+<!-- Pass-the-Hash Detection                                         -->
+<!-- =============================================================== -->
+
+<rule id="100123" level="12">
+    <if_sid>92652</if_sid>
+
+    <field name="win.eventdata.targetUserName" type="pcre2">(?i)^jdoe$</field>
+
+    <description>
+        DET-024 - Possible Pass-the-Hash attack: NTLM network logon by $(win.eventdata.targetDomainName)\$(win.eventdata.targetUserName) from $(win.eventdata.ipAddress)
+    </description>
+
+    <mitre>
+        <id>T1550.002</id>
+    </mitre>
+
+    <group>
+        custom_detection_engineering,
+        windows,
+        lateral_movement,
+        credential_access,
+        pass_the_hash,
+        authentication,
+        attack.t1550.002
+    </group>
+</rule>
+
+<!-- ============ Discovery And Reconnaissance =============== -->
+
+<!-- ========================================================= -->
+<!-- DET-025                                                   -->
+<!-- SharpHound/BloodHound Collector Execution                 -->
+<!-- ========================================================= -->
+
+<rule id="100124" level="10">
+
+    <if_sid>61603</if_sid>
+
+    <field name="win.eventdata.originalFileName">SharpHound.exe</field>
+
+    <description>
+        DET-025 SharpHound / BloodHound Collector Execution
+    </description>
+
+    <group>
+        custom_windows,
+        discovery,
+        bloodhound,
+        sharphound,
+        active_directory,
+        attack.t1087,
+        attack.t1482,
+    </group>
+
+    <mitre>
+        <id>T1087</id>
+        <id>T1069.002</id>
+        <id>T1482</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-026                                                   -->
+<!-- ADFind Enumeration Tool Execution                         -->
+<!-- ========================================================= -->
+
+<rule id="100125" level="12">
+
+    <if_sid>61603</if_sid>
+
+    <field name="win.eventdata.originalFileName">AdFind.exe</field>
+
+    <description>
+        DET-026 AdFind Active Directory Enumeration Tool Execution
+    </description>
+
+    <group>
+        custom_windows,
+        discovery,
+        active_directory,
+        adfind,
+        attack.t1087,
+        attack.t1482,
+        attack.t1069.002,
+    </group>
+
+    <mitre>
+        <id>T1087</id>
+        <id>T1482</id>
+        <id>T1069.002</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-027                                                   -->
+<!-- Windows Network Discovery Commands Execution              -->
+<!-- ========================================================= -->
+
+<rule id="100126" level="8">
+
+    <if_sid>61603</if_sid>
+
+    <field name="win.system.eventID">1</field>
+
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(ipconfig|arp\s+-a|route\s+print|netstat|net\s+view|net\s+group|nslookup|hostname|whoami|ping|tracert|nltest|netsh)</field>
+
+    <description>
+        DET-027 Discovery Command on $(win.system.computer) by $(win.eventdata.user): $(win.eventdata.commandLine)
+    </description>
+
+    <group>
+        custom_windows,
+        discovery,
+        network_discovery,
+        attack.t1016,
+        attack.t1049
+    </group>
+
+    <mitre>
+        <id>T1016</id>
+        <id>T1049</id>
+    </mitre>
+
+</rule>
+
+<!-- ========= Lateral Movement And Remote Execution ========= -->
+
+<!-- ========================================================= -->
+<!-- DET-028                                                   -->
+<!-- PsExec Process Execution Detection                        -->
+<!-- ========================================================= -->
+
+<rule id="100127" level="12">
+
+    <if_group>sysmon_event1</if_group>
+
+    <field name="win.eventdata.image" type="pcre2">(?i)\\psexec(64)?\.exe$</field>
+
+    <description>
+        DET-028 PsExec Execution - $(win.eventdata.user)
+    </description>
+
+    <mitre>
+        <id>T1021.002</id>
+        <id>T1569.002</id>
+    </mitre>
+
+    <group>
+        custom_windows,
+        lateral_movement,
+        psexec,
+        attack.t1021.002,
+        attack.t1569.002
+    </group>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-029                                                   -->
+<!-- SMB Admin Share Access                                    -->
+<!-- ========================================================= -->
+
+<rule id="100128" level="12">
+
+    <if_sid>67017</if_sid>
+
+    <field name="win.eventdata.shareName" type="pcre2">(ADMIN|C)\$</field>
+
+    <description>
+        DET-029 Administrative SMB Share Access - $(win.eventdata.subjectDomainName)\$(win.eventdata.subjectUserName)
+    </description>
+
+    <mitre>
+        <id>T1021.002</id>
+    </mitre>
+
+    <group>
+        custom_windows,
+        lateral_movement,
+        smb,
+        attack.t1021.002
+    </group>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-030                                                   -->
+<!-- WinRM Execution Detection                                 -->
+<!-- ========================================================= -->
+
+<rule id="100129" level="12">
+    <if_sid>61603</if_sid>
+
+    <field name="win.eventdata.image" type="pcre2">(?i).*\\wsmprovhost\.exe$</field>
+
+    <description>
+        DET-030 WinRM Remote Session - $(win.eventdata.user)
+    </description>
+
+    <group>
+        custom_windows,
+        lateral_movement,
+        winrm,
+        attack.t1021.006
+    </group>
+
+    <mitre>
+        <id>T1021.006</id>
+    </mitre>
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-031                                                   -->
+<!-- WMI Execution Detection                                   -->
+<!-- ========================================================= -->
+
+<rule id="100130" level="12">
+
+    <if_sid>92069</if_sid>
+
+    <field name="win.eventdata.originalFileName" type="pcre2">(?i)(Cmd\.EXE|RUNDLL32\.EXE|REGSVR32\.EXE|MSHTA\.EXE|CSCRIPT\.EXE|WSCRIPT\.EXE|CERTUTIL\.EXE|BITSADMIN\.EXE)</field>
+
+    <description>
+        DET-031 WMI Remote Command Execution - $(win.eventdata.user)
+    </description>
+
+    <group>
+        custom_windows,
+        execution,
+        wmi,
+        attack.t1047
+    </group>
+
+    <mitre>
+        <id>T1047</id>
+    </mitre>
+
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-032                                                         -->
+<!-- Successful RDP Logon Detection                                 -->
+<!-- =============================================================== -->
+
+<rule id="100131" level="7">
+    <if_sid>92651</if_sid>
+
+    <field name="win.eventdata.logonType" type="pcre2">^10$</field>
+
+    <description>
+        DET-032 - Successful Remote Desktop (RDP) logon: $(win.eventdata.targetDomainName)\$(win.eventdata.targetUserName) from $(win.eventdata.ipAddress)
+    </description>
+
+    <mitre>
+        <id>T1021.001</id>
+    </mitre>
+
+    <group>
+        custom_detection_engineering,
+        windows,
+        lateral_movement,
+        remote_access,
+        rdp,
+        authentication,
+        attack.t1021.001
+    </group>
+</rule>
+
+<!-- ============ Persistence And Defense Evasion ============ -->
+
+<!-- ========================================================= -->
+<!-- DET-033                                                   -->
+<!-- New Windows Service Installed                             -->
+<!-- ========================================================= -->
+
+<rule id="100132" level="12">
+    <if_sid>61138</if_sid>
+
+    <description>
+        DET-033 New Windows Service Installed - $(win.eventdata.serviceName)
+    </description>
+
+    <group>
+        custom_detection_engineering,
+        custom_windows,
+        persistence,
+        service_creation,
+        attack.t1543.003
+    </group>
+
+    <mitre>
+        <id>T1543.003</id>
+    </mitre>
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-034                                                   -->
+<!-- New Scheduled Task Creation                               -->
+<!-- ========================================================= -->
+
+<rule id="100133" level="12">
+    <if_sid>60228</if_sid>
+
+    <description>
+        DET-034 Scheduled Task Created - $(win.eventdata.taskName)
+    </description>
+
+    <group>
+        custom_detection_engineering,
+        custom_windows,
+        persistence,
+        scheduled_task,
+        attack.t1053.005
+    </group>
+
+    <mitre>
+        <id>T1053.005</id>
+    </mitre>
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-035                                                         -->
+<!-- Group Policy Modification                                       -->
+<!-- =============================================================== -->
+
+<rule id="100134" level="12">
+
+    <if_sid>60229</if_sid>
+
+    <field name="win.eventdata.objectClass">groupPolicyContainer</field>
+
+    <description>
+        DET-035 GPO Modified -
+        $(win.eventdata.subjectUserName) modified
+        $(win.eventdata.objectDN)
+    </description>
+
+    <group>
+        custom_detection_engineering,
+        custom_windows,
+        persistence,
+        gpo_modification,
+        attack.t1484.001
+    </group>
+
+    <mitre>
+        <id>T1484.001</id>
+    </mitre>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-036                                                   -->
+<!-- Startup Folder Persistence                              -->
+<!-- ========================================================= -->
+
+<rule id="100135" level="14">
+    <if_sid>92204</if_sid>
+
+    <field name="win.eventdata.targetFilename" type="pcre2">(?i).*(ProgramData|Users\\\\[^\\\\]+\\\\AppData\\\\Roaming)\\\\Microsoft\\\\Windows\\\\Start Menu\\\\Programs\\\\StartUp.*</field>
+
+    <description>
+        DET-036 - $(win.eventdata.image) created $(win.eventdata.targetFilename) in the Windows Startup folder
+    </description>
+
+    <mitre>
+        <id>T1547.001</id>
+    </mitre>
+
+    <group>
+        windows,
+        sysmon,
+        persistence,
+        attack,
+        custom_detection,
+    </group>
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-037                                                   -->
+<!-- Security Event Log Cleared                                -->
+<!-- ========================================================= -->
+
+<rule id="100136" level="15">
+
+    <if_sid>63103</if_sid>
+
+    <description>
+        DET-037 - Windows Security Event Log was cleared
+    </description>
+
+    <mitre>
+        <id>T1070.004</id>
+    </mitre>
+
+    <group>
+        windows,
+        defense_evasion,
+        attack,
+        custom_detection,
+    </group>
+
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-038                                                   -->
+<!-- Windows Audit Policy Modification                         -->
+<!-- ========================================================= -->
+
+<rule id="100137" level="13">
+    <if_sid>60112</if_sid>
+
+    <description>
+        DET-038 - $(win.eventdata.subjectUserName) modified Windows Audit Policy: $(win.eventdata.category) / $(win.eventdata.subcategory) ($(win.eventdata.auditPolicyChanges))
+    </description>
+
+    <mitre>
+        <id>T1562.002</id>
+    </mitre>
+
+    <group>
+        windows,
+        defense_evasion,
+        attack,
+        custom_detection,
+    </group>
+</rule>
+
+<!-- ========================================================= -->
+<!-- DET-039                                                   -->
+<!-- Windows Defender Tampering                                -->
+<!-- ========================================================= -->
+
+<rule id="100138" level="13">
+    <if_sid>62100</if_sid>
+
+    <field name="win.system.eventID" type="pcre2">^(5001|5007|5013)$</field>
+
+    <description>
+        DET-039 - Windows Defender protection tampering detected
+    </description>
+
+    <group>
+        windows,
+        defense_evasion,
+        attack,
+        custom_detection_engineering,
+        custom_detection
+    </group>
+
+    <mitre>
+        <id>T1562.001</id>
+    </mitre>
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-040                                                         -->
+<!-- Suspicious PowerShell Execution                                 -->
+<!-- =============================================================== -->
+
+<rule id="100139" level="10">
+
+    <!-- Existing Sysmon PowerShell detection -->
+    <if_sid>92027</if_sid>
+
+    <!-- Suspicious execution policy bypass -->
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)-ExecutionPolicy\s+Bypass</field>
+
+    <description>
+        DET-040 - Suspicious PowerShell execution using ExecutionPolicy Bypass by $(win.eventdata.user)
+    </description>
+
+    <mitre>
+        <id>T1059.001</id>
+    </mitre>
+
+    <group>
+        custom_detection_engineering,
+        windows,
+        execution,
+        powershell,
+        suspicious_execution,
+        attack.t1059.001
+    </group>
+
+</rule>
+
+<!-- =============================================================== -->
+<!-- DET-041                                                         -->
+<!-- Windows Firewall Rule Added/Modified/Deleted                    -->
+<!-- =============================================================== -->
+
+<rule id="100140" level="7">
+
+    <if_sid>60103</if_sid>
+
+    <field name="win.system.eventID" type="pcre2">^(4946|4947|4948)$</field>
+
+    <description>
+        DET-041 - Windows Firewall exception rule changed: $(win.eventdata.ruleName) (Event $(win.system.eventID))
+    </description>
+
+    <group>
+        windows,
+        defense_evasion,
+        firewall_change,
+        custom_detection_engineering,
+        custom_detection
+    </group>
+
+    <mitre>
+        <id>T1562.004</id>
+    </mitre>
+
+</rule>
+
+<!-- =========================== Impact ============================ -->
+
+<!-- =============================================================== -->
+<!-- DET-042                                                         -->
+<!-- Windows Security Enabled Group Deletion                         -->
+<!-- =============================================================== -->
+
+<rule id="100141" level="10">
+    <if_sid>60139</if_sid>
+
+    <field name="win.system.eventID" type="pcre2">^(4730|4734|4758)$</field>
+
+    <description>
+        DET-042 - Windows security-enabled group deleted: $(win.eventdata.targetUserName) by $(win.eventdata.subjectUserName) (Event $(win.system.eventID))
+    </description>
+
+    <group>
+        windows,
+        impact,
+        account_management,
+        custom_detection_engineering,
+        custom_detection
+    </group>
+
+    <mitre>
+        <id>T1531</id>
+    </mitre>
+
+</rule>
+
+</group>
