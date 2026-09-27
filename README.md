@@ -1,5 +1,14 @@
 # SOC Active Directory Detection & Incident Response Lab
 
+[![Active Directory](https://img.shields.io/badge/Active%20Directory-0078D4?logo=microsoft&logoColor=white)](https://learn.microsoft.com/windows-server/identity/ad-ds/)
+[![Wazuh](https://img.shields.io/badge/SIEM-Wazuh-4A90E2?logo=wazuh&logoColor=white)](https://wazuh.com/)
+[![Windows Server](https://img.shields.io/badge/Windows%20Server-2022-0078D6?logo=windows&logoColor=white)](https://www.microsoft.com/windows-server)
+[![Windows 11](https://img.shields.io/badge/Windows%2011-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows/windows-11)
+[![Sysmon](https://img.shields.io/badge/Telemetry-Sysmon-0078D4?logo=windows&logoColor=white)](https://learn.microsoft.com/sysinternals/downloads/sysmon)
+[![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-Mapped-EF3B2D?logo=mitre&logoColor=white)](https://attack.mitre.org/)
+[![Detection Rules](https://img.shields.io/badge/Detection%20Rules-42-6f42c1)](#detection-coverage)
+[![IR Playbooks](https://img.shields.io/badge/IR%20Playbooks-7-2ea44f)](#incident-response)
+
 > A hands-on Security Operations Center (SOC) lab for simulating Windows and Active Directory attacks, engineering Wazuh detections, investigating security events, and executing incident response workflows.
 
 ---
