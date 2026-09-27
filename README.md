@@ -13,6 +13,20 @@
 
 ---
 
+## Quick Navigation
+
+- [Lab Architecture](docs/architecture.md)
+- [Detection Engineering](docs/detection-engineering.md)
+- [42 Detection Rules](detection-rules/README.md)
+- [Security Dashboards](docs/dashboards.md)
+- [MITRE ATT&CK Coverage](docs/mitre-attack.md)
+- [Attack Simulations](docs/attack-simulations.md)
+- [Incident Response Playbooks](incident-response/README.md)
+- [Validation](docs/validation.md)
+- [Lessons Learned](docs/lessons-learned.md)
+
+---
+
 ## Overview
 
 This project is a self-contained SOC lab built around a Windows Active Directory environment.
@@ -50,6 +64,7 @@ The primary focus is **Windows and Active Directory security**, with attack acti
 - **42 custom Wazuh detection rules**
 - **42 individual detection documents**
 - **7 incident-level response playbooks**
+- **7 Wazuh SOC Dashboards**
 - Windows Security Event Log and Sysmon telemetry collection
 - Active Directory attack simulations
 - Wazuh SOC dashboards for monitoring and investigation
