@@ -536,7 +536,7 @@ Finish with [`docs/lessons-learned.md`](docs/lessons-learned.md) for engineering
 | MITRE ATT&CK Mapping | Complete |
 | Validation Documentation | Complete |
 | Repository Documentation | Complete |
-| Final Repository Polish | In Progress |
+| Final Repository Polish | Complete |
 
 ---
 
@@ -649,3 +649,9 @@ The techniques demonstrated in this repository should not be used against system
 ## Author
 
 Built as a hands-on SOC, Windows, Active Directory, detection engineering, threat hunting, and incident response learning project.
+
+### Connect With Me
+
+* GitHub: [Harikrishnan-P97](https://github.com/Harikrishnan-P97)
+* LinkedIn: [Harikrishnan P](https://www.linkedin.com/in/harikrishnanp097/)
+* Medium: [@harikrishnan.p097](https://medium.com/@harikrishnan.p097)
