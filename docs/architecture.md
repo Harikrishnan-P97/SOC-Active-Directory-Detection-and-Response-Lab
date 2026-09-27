@@ -590,8 +590,7 @@ representation of the architecture and SOC workflow.
 
 ### Lab Architecture
 
-![SOC Active Directory Detection Lab
-Architecture](diagrams/Architecture-diagram.png)
+![SOC Active Directory Detection Lab Architecture](../diagrams/Architecture-diagram.png)
 
 This diagram illustrates the four primary layers:
 
@@ -602,8 +601,7 @@ This diagram illustrates the four primary layers:
 
 ### Detection → Investigation → Response Workflow
 
-![Detection Investigation Response
-Workflow](diagrams/Detection-Investigation-Response-Workflow-Diagram.png)
+![Detection Investigation Response Workflow](../diagrams/Detection-Investigation-Response-Workflow-Diagram.png)
 
 This diagram illustrates the operational workflow from suspicious
 activity through detection, alert triage, investigation, incident
