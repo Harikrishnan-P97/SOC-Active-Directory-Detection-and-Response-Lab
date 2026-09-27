@@ -229,7 +229,7 @@ Examples include:
 
 See:
 
-`docs/mappings/detection-to-mitre-id.md`
+[Detection → MITRE ATT&CK Mapping](../docs/mappings/detection-to-mitre-id.md)
 
 for the complete detection-to-technique mapping.
 
@@ -260,7 +260,7 @@ SOC Alert
 
 See:
 
-`docs/mappings/detection-to-event-id.md`
+[Detection → Windows Event ID Mapping](../docs/mappings/detection-to-event-id.md)
 
 for the complete telemetry mapping.
 
@@ -293,7 +293,7 @@ IR Playbook
 
 See:
 
-`docs/mappings/detection-to-playbook.md`
+[Detection → Incident Response Playbooks](../docs/mappings/detection-to-playbook.md)
 
 for the complete mapping.
 
@@ -313,13 +313,6 @@ Validation focuses on:
 6. Confirming relevant MITRE ATT&CK mapping.
 7. Testing investigation and response workflow.
 8. Tuning the rule where necessary to reduce false positives.
-
-Validation evidence is maintained separately under:
-
-```text
-validation/
-screenshots/validation/
-```
 
 ---
 
