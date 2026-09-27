@@ -579,12 +579,6 @@ The repository also contains:
 
 This image is retained as an additional project screenshot. It is not assigned to one of the seven dashboard sections because its specific dashboard context is not established by the dashboard inventory.
 
-### GitHub Rendering
-
-The GIF files are referenced directly from `docs/dashboards.md` using relative paths. When the repository is viewed on GitHub, the GIFs can be displayed inline and provide an animated view of each dashboard.
-
-The dashboard inventory image and individual dashboard recordings therefore serve as the visual documentation for the Wazuh dashboard environment.
-
 ---
 
 ## 12. Wazuh Environment
