@@ -936,10 +936,24 @@ Expected / Authorized?
 
 ## Related Playbooks
 
-- **IR-001 — Credential Attack & Account Compromise** — Authentication anomalies or compromised accounts associated with persistence activity.
-- **IR-002 — AD Account & Privilege Compromise** — Unauthorized account, privilege, group, or AD object changes associated with the incident.
-- **IR-003 — Kerberos & Credential Theft Attack** — Credential theft discovered before or during persistence/defense-evasion activity.
-- **IR-004 — Active Directory Discovery & Reconnaissance** — Reconnaissance performed before establishing persistence.
-- **IR-005 — Lateral Movement & Remote Execution** — Remote access or execution associated with the persistence/evasion incident.
+- **[IR-001 — Credential Attack & Account Compromise](../incident-response/IR-001-Credential-Attack-and-Account-Compromise.md)** — Authentication anomalies or compromised accounts associated with persistence activity.
+
+- **[IR-002 — AD Account & Privilege Compromise](../incident-response/IR-002-Active-Directory-Account-and-Privilege-Compromise.md)** — Unauthorized account, privilege, group, or AD object changes associated with the incident.
+
+- **[IR-003 — Kerberos & Credential Theft Attack](../incident-response/IR-003-Kerberos-and-Credential-Theft-Attack.md)** — Credential theft discovered before or during persistence/defense-evasion activity.
+
+- **[IR-004 — Active Directory Discovery & Reconnaissance](../incident-response/IR-004-AD-Discovery-and-Reconnaissance.md)** — Reconnaissance performed before establishing persistence.
+
+- **[IR-005 — Lateral Movement & Remote Execution](../incident-response/IR-005-Lateral-Movement-and-Remote-Execution.md)** — Remote access or execution associated with the persistence/evasion incident.
 
 DET-033 through DET-041 are intentionally handled as one incident-response scenario because persistence and defense evasion frequently operate together: an attacker establishes a foothold, weakens visibility, and maintains access rather than treating each technique as an isolated incident.
+
+- [DET-033 — New Windows Service Installed](../docs/detections/07-persistence-and-defense-evasion/DET-033-New-Windows-Service-Installed.md)
+- [DET-034 — New Scheduled Task Creation](../docs/detections/07-persistence-and-defense-evasion/DET-034-New-Scheduled-Task-Creation.md)
+- [DET-035 — Group Policy Modification](../docs/detections/07-persistence-and-defense-evasion/DET-035-Group-Policy-Modification.md)
+- [DET-036 — Startup Folder Persistence](../docs/detections/07-persistence-and-defense-evasion/DET-036-Startup-Folder-Persistence.md)
+- [DET-037 — Security Event Log Cleared](../docs/detections/07-persistence-and-defense-evasion/DET-037-Security-Event-Log-Cleared.md)
+- [DET-038 — Windows Audit Policy Modification](../docs/detections/07-persistence-and-defense-evasion/DET-038-Windows-Audit-Policy-Modification.md)
+- [DET-039 — Windows Defender Tampering](../docs/detections/07-persistence-and-defense-evasion/DET-039-Windows-Defender-Tampering.md)
+- [DET-040 — Suspicious PowerShell Execution](../docs/detections/07-persistence-and-defense-evasion/DET-040-Suspicious-PowerShell-Execution.md)
+- [DET-041 — Windows Firewall Rule Changed](../docs/detections/07-persistence-and-defense-evasion/DET-041-Windows-Firewall-Rule-Changed.md)

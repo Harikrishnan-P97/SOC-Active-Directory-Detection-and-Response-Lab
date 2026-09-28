@@ -886,8 +886,12 @@ Expected / Authorized?
 
 ## Related Playbooks
 
-- **IR-001 — Credential Attack & Account Compromise** — Authentication anomalies or compromised accounts used during lateral movement.
-- **IR-002 — AD Account & Privilege Compromise** — Unauthorized account, group, or privilege changes discovered during the incident.
-- **IR-003 — Kerberos & Credential Theft Attack** — Credential theft or exposed authentication material associated with remote movement.
-- **IR-004 — Active Directory Discovery & Reconnaissance** — Reconnaissance performed before or during lateral movement.
-- **IR-006 — Persistence & Defense Evasion** — Persistence or security-control tampering established after remote execution.
+- **[IR-001 — Credential Attack & Account Compromise](../incident-response/IR-001-Credential-Attack-and-Account-Compromise.md)** — Authentication anomalies or compromised accounts used during lateral movement.
+
+- **[IR-002 — AD Account & Privilege Compromise](../incident-response/IR-002-Active-Directory-Account-and-Privilege-Compromise.md)** — Unauthorized account, group, or privilege changes discovered during the incident.
+
+- **[IR-003 — Kerberos & Credential Theft Attack](../incident-response/IR-003-Kerberos-and-Credential-Theft-Attack.md)** — Credential theft or exposed authentication material associated with remote movement.
+
+- **[IR-004 — Active Directory Discovery & Reconnaissance](../incident-response/IR-004-AD-Discovery-and-Reconnaissance.md)** — Reconnaissance performed before or during lateral movement.
+
+- **[IR-006 — Persistence & Defense Evasion](../incident-response/IR-006-Persistence-and-Defense-Evasion.md)** — Persistence or security-control tampering established after remote execution.
