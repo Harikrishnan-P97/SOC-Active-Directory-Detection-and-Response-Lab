@@ -551,7 +551,6 @@ Finish with [`docs/lessons-learned.md`](docs/lessons-learned.md) for engineering
 | MITRE ATT&CK Mapping | Complete |
 | Validation Documentation | Complete |
 | Repository Documentation | Complete |
-| Final Repository Polish | Complete |
 
 ---
 
